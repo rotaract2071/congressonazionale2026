@@ -1,1 +1,777 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Il mio tavolo – Congresso Nazionale Siena 2026</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --cranberry:       #D41367;
+      --cranberry-light: #f9d0e5;
+      --cranberry-dark:  #a50f50;
+      --text:            #1a1a2e;
+      --text-secondary:  #5a5a72;
+      --bg:              #f7f7fa;
+      --card-bg:         #ffffff;
+      --border:          #e2e2ee;
+      --shadow-sm:       0 1px 4px rgba(0, 0, 0, 0.06);
+      --shadow:          0 4px 20px rgba(0, 0, 0, 0.08);
+      --radius:          14px;
+      --radius-sm:       8px;
+    }
 
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --text:           #e8e8f4;
+        --text-secondary: #9090aa;
+        --bg:             #0e0e1c;
+        --card-bg:        #181828;
+        --border:         #2a2a40;
+      }
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Open Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Header ────────────────────────────────── */
+    header {
+      background: var(--cranberry);
+      color: #fff;
+      text-align: center;
+      padding: 2.25rem 1.5rem 2rem;
+    }
+
+    header h1 {
+      font-size: 1.3rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 0.35rem;
+    }
+
+    header p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      opacity: 0.88;
+    }
+
+    /* ── Main ──────────────────────────────────── */
+    main {
+      flex: 1;
+      max-width: 640px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 2rem 1.25rem 3rem;
+    }
+
+    /* ── Search ────────────────────────────────── */
+    .search-section { margin-bottom: 1.75rem; }
+
+    .search-label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+
+    .search-wrapper { position: relative; }
+
+    .search-icon {
+      position: absolute;
+      left: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--cranberry);
+      pointer-events: none;
+      display: flex;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 0.9rem 1rem 0.9rem 3rem;
+      font-family: inherit;
+      font-size: 1rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--card-bg);
+      color: var(--text);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .search-input:focus {
+      border-color: var(--cranberry);
+      box-shadow: 0 0 0 4px rgba(212, 19, 103, 0.12);
+    }
+
+    .search-input::placeholder { color: #aaaacc; }
+
+    /* ── Result count ──────────────────────────── */
+    .result-meta {
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 0.85rem;
+    }
+
+    /* ── Guest card ────────────────────────────── */
+    .guest-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.1rem 1.4rem;
+      margin-bottom: 0.65rem;
+      box-shadow: var(--shadow-sm);
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .guest-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+
+    .guest-name {
+      font-size: 1rem;
+      font-weight: 600;
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .table-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: var(--cranberry-light);
+      color: var(--cranberry-dark);
+      font-family: inherit;
+      font-size: 0.83rem;
+      font-weight: 700;
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .table-badge:hover,
+    .table-badge:focus-visible {
+      background: var(--cranberry);
+      color: #fff;
+      outline: none;
+    }
+
+    /* ── Table detail view ─────────────────────── */
+    .table-view { display: none; }
+    .table-view.active { display: block; }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      background: none;
+      border: none;
+      color: var(--cranberry);
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 0.4rem 0;
+      margin-bottom: 1.5rem;
+    }
+
+    .back-btn:hover { opacity: 0.7; }
+
+    .table-heading {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 1.4rem;
+    }
+
+    .table-heading-icon {
+      width: 40px;
+      height: 40px;
+      background: var(--cranberry);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .table-title {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--cranberry);
+    }
+
+    .table-subtitle {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      margin-top: 0.1rem;
+    }
+
+    .diner-list { list-style: none; }
+
+    .diner-item {
+      padding: 0.75rem 1.2rem;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      margin-bottom: 0.45rem;
+      font-size: 0.95rem;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .diner-item.highlighted {
+      border-color: var(--cranberry);
+      background: var(--cranberry-light);
+      font-weight: 700;
+    }
+
+    /* ── States ────────────────────────────────── */
+    .state-box {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--text-secondary);
+    }
+
+    .state-icon {
+      font-size: 2.6rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+
+    .state-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+      color: var(--text);
+    }
+
+    .state-description {
+      font-size: 0.875rem;
+      line-height: 1.65;
+    }
+
+    /* ── Loader ────────────────────────────────── */
+    .loader { text-align: center; padding: 3rem; }
+
+    .spinner {
+      width: 36px;
+      height: 36px;
+      border: 3px solid var(--cranberry-light);
+      border-top-color: var(--cranberry);
+      border-radius: 50%;
+      animation: spin 0.75s linear infinite;
+      margin: 0 auto 1rem;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loader-text {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+    }
+
+    /* ── Config notice ─────────────────────────── */
+    .config-notice {
+      background: #fffbee;
+      border: 1px solid #ffe082;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      font-size: 0.875rem;
+      line-height: 1.7;
+      color: #6b5300;
+    }
+
+    .config-notice strong { display: block; margin-bottom: 0.5rem; font-size: 1rem; }
+
+    .config-notice code {
+      font-family: 'Courier New', monospace;
+      font-size: 0.82em;
+      background: rgba(0, 0, 0, 0.07);
+      padding: 0.1em 0.35em;
+      border-radius: 4px;
+    }
+
+    /* ── Footer ────────────────────────────────── */
+    footer {
+      text-align: center;
+      padding: 1.25rem;
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      letter-spacing: 0.04em;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Congresso Nazionale Siena 2026</h1>
+    <p>Trova il tuo posto a tavola</p>
+  </header>
+
+  <main>
+
+    <section class="search-section" aria-label="Ricerca commensale">
+      <label for="search-input" class="search-label">Cerca il tuo nome</label>
+      <div class="search-wrapper">
+        <span class="search-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.2"
+               stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+        </span>
+        <input
+          type="search"
+          id="search-input"
+          class="search-input"
+          placeholder="Nome e cognome…"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          aria-label="Cerca il tuo nome"
+        />
+      </div>
+    </section>
+
+    <section id="results-section" aria-live="polite" aria-atomic="false"
+             aria-label="Risultati ricerca">
+    </section>
+
+    <section id="table-view" class="table-view"
+             aria-label="Commensali al tavolo" aria-live="polite">
+    </section>
+
+  </main>
+
+  <footer>
+    <p>Rotaract Club &mdash; Congresso Nazionale Siena 2026</p>
+  </footer>
+
+  <script type="module">
+    // @ts-check
+
+    /**
+     * @typedef {{ nome: string, cognome: string, nomeCompleto: string, tavolo: string }} Commensale
+     */
+
+    // ─────────────────────────────────────────────────────────────────────────
+    // CONFIGURAZIONE
+    // Inserire qui l'URL di pubblicazione del foglio Google (formato CSV).
+    // Per ottenere l'URL:
+    //   1. Aprire il foglio Google
+    //   2. File → Condividi → Pubblica sul web
+    //   3. Selezionare il foglio corretto e il formato "Valori separati da virgola (.csv)"
+    //   4. Incollare il link qui sotto
+    // Il foglio deve avere almeno due colonne: una per il nome (es. "nome" e "cognome",
+    // oppure "nome_completo") e una per il tavolo (es. "tavolo").
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /** @type {string} */
+    const SPREADSHEET_URL = '';
+
+    // Numero minimo di caratteri digitati prima di avviare la ricerca
+    const MIN_SEARCH_CHARS = 2;
+
+    // ─────────────────────────────────────────────────────────────────────────
+
+    /** @type {Commensale[]} */
+    let allDiners = [];
+
+    /** @type {'idle' | 'loading' | 'ready' | 'error'} */
+    let appState = 'idle';
+
+    const resultsSection = /** @type {HTMLElement} */ (document.getElementById('results-section'));
+    const tableViewEl    = /** @type {HTMLElement} */ (document.getElementById('table-view'));
+    const searchInput    = /** @type {HTMLInputElement} */ (document.getElementById('search-input'));
+
+    // ── CSV parser ────────────────────────────────────────────────────────────
+
+    /**
+     * Parses a single CSV line, correctly handling double-quoted fields.
+     * @param {string} line
+     * @returns {string[]}
+     */
+    function parseLine(line) {
+      const fields = [];
+      let i = 0;
+      while (i < line.length) {
+        if (line[i] === '"') {
+          let field = '';
+          i++;
+          while (i < line.length) {
+            if (line[i] === '"' && line[i + 1] === '"') { field += '"'; i += 2; }
+            else if (line[i] === '"') { i++; break; }
+            else { field += line[i++]; }
+          }
+          fields.push(field);
+          if (i < line.length && line[i] === ',') i++;
+        } else {
+          let field = '';
+          while (i < line.length && line[i] !== ',') field += line[i++];
+          fields.push(field);
+          if (i < line.length && line[i] === ',') i++;
+        }
+      }
+      // An empty line or a trailing comma both require an extra empty field
+      if (line.length === 0 || line[line.length - 1] === ',') fields.push('');
+      return fields;
+    }
+
+    /**
+     * Parses a CSV string into an array of plain objects keyed by normalised header names.
+     * @param {string} csv
+     * @returns {Record<string, string>[]}
+     */
+    function parseCSV(csv) {
+      const lines = csv.replace(/\r\n/g, '\n').replace(/\r/g, '\n').trim().split('\n');
+      if (lines.length < 2) return [];
+      const headers = parseLine(lines[0]).map(h => h.trim().toLowerCase().replace(/\s+/g, '_'));
+      return lines.slice(1)
+        .map(line => {
+          const values = parseLine(line);
+          /** @type {Record<string, string>} */
+          const row = {};
+          headers.forEach((h, idx) => { row[h] = (values[idx] ?? '').trim(); });
+          return row;
+        })
+        .filter(row => Object.values(row).some(v => v !== ''));
+    }
+
+    /**
+     * Normalises a raw CSV row into a {@link Commensale}.
+     * Supports multiple column naming conventions:
+     *   - nome + cognome
+     *   - nome_completo | nominativo | name
+     *   - fallback: first non-table column treated as full name
+     * @param {Record<string, string>} row
+     * @returns {Commensale | null}
+     */
+    function normalizeRow(row) {
+      let nome = '', cognome = '', nomeCompleto = '';
+
+      if ((row['nome_completo'] ?? '').trim() || (row['nominativo'] ?? '').trim() || (row['name'] ?? '').trim()) {
+        nomeCompleto = ((row['nome_completo'] ?? '').trim() || (row['nominativo'] ?? '').trim() || (row['name'] ?? '').trim());
+        const parts = nomeCompleto.split(/\s+/);
+        nome = parts[0] ?? '';
+        cognome = parts.slice(1).join(' ');
+      } else if ((row['nome'] ?? '').trim() || (row['cognome'] ?? '').trim()) {
+        nome     = (row['nome']    ?? '').trim();
+        cognome  = (row['cognome'] ?? '').trim();
+        nomeCompleto = [nome, cognome].filter(Boolean).join(' ');
+      } else {
+        const TABLE_KEYS = new Set(['tavolo', 'table', 'mesa', 'nome_tavolo', 'table_name']);
+        const nameKey = Object.keys(row).find(k => !TABLE_KEYS.has(k));
+        if (!nameKey) return null;
+        nomeCompleto = row[nameKey].trim();
+        const parts = nomeCompleto.split(/\s+/);
+        nome = parts[0] ?? '';
+        cognome = parts.slice(1).join(' ');
+      }
+
+      const tavolo = (
+        row['tavolo'] ?? row['table'] ?? row['mesa'] ??
+        row['nome_tavolo'] ?? row['table_name'] ?? ''
+      ).trim();
+
+      if (!nomeCompleto || !tavolo) return null;
+      return { nome, cognome, nomeCompleto, tavolo };
+    }
+
+    // ── Data loading ──────────────────────────────────────────────────────────
+
+    /** Fetches, parses and stores the spreadsheet data. */
+    async function loadData() {
+      if (!SPREADSHEET_URL) {
+        appState = 'error';
+        renderConfigNotice();
+        return;
+      }
+
+      appState = 'loading';
+      renderLoader();
+
+      try {
+        const res = await fetch(SPREADSHEET_URL);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const csv = await res.text();
+        const rows = parseCSV(csv);
+        allDiners = /** @type {Commensale[]} */ (
+          rows.map(normalizeRow).filter(d => d !== null)
+        );
+        appState = 'ready';
+        renderIdle();
+      } catch (err) {
+        console.error('Errore nel caricamento dei dati:', err);
+        appState = 'error';
+        renderLoadError();
+      }
+    }
+
+    // ── Filtering ─────────────────────────────────────────────────────────────
+
+    /**
+     * Returns diners whose full name contains every word in the query.
+     * @param {string} query
+     * @returns {Commensale[]}
+     */
+    function filterDiners(query) {
+      const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+      return allDiners.filter(d => {
+        const haystack = d.nomeCompleto.toLowerCase();
+        return terms.every(t => haystack.includes(t));
+      });
+    }
+
+    // ── Render helpers ────────────────────────────────────────────────────────
+
+    /** Clears both dynamic sections. */
+    function clearResults() {
+      resultsSection.innerHTML = '';
+      tableViewEl.classList.remove('active');
+      tableViewEl.innerHTML = '';
+    }
+
+    /** Shows the loading spinner. */
+    function renderLoader() {
+      clearResults();
+      resultsSection.innerHTML = `
+        <div class="loader" role="status" aria-live="polite">
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="loader-text">Caricamento in corso…</p>
+        </div>`;
+    }
+
+    /** Shows the idle/welcome prompt. */
+    function renderIdle() {
+      clearResults();
+      resultsSection.innerHTML = `
+        <div class="state-box">
+          <span class="state-icon" aria-hidden="true">🔍</span>
+          <p class="state-title">Inizia a digitare il tuo nome</p>
+          <p class="state-description">Ti mostreremo il tuo tavolo in tempo reale.</p>
+        </div>`;
+    }
+
+    /** Shows the spreadsheet-not-configured notice and disables the search input. */
+    function renderConfigNotice() {
+      clearResults();
+      resultsSection.innerHTML = `
+        <div class="config-notice" role="alert">
+          <strong>⚙️ Configurazione richiesta</strong>
+          Apri il file <code>tableau/index.html</code> e imposta la costante
+          <code>SPREADSHEET_URL</code> con il link di pubblicazione CSV del foglio Google
+          contenente i dati dei commensali.
+          <br/><br/>
+          Il foglio deve includere le colonne:
+          <code>nome</code> e <code>cognome</code> (oppure <code>nome_completo</code>)
+          e <code>tavolo</code>.
+        </div>`;
+      searchInput.disabled = true;
+    }
+
+    /** Shows a generic load-error message. */
+    function renderLoadError() {
+      clearResults();
+      resultsSection.innerHTML = `
+        <div class="state-box" role="alert">
+          <span class="state-icon" aria-hidden="true">⚠️</span>
+          <p class="state-title">Impossibile caricare i dati</p>
+          <p class="state-description">
+            Controlla che l'URL del foglio sia corretto e che il documento
+            sia pubblicato per la visualizzazione pubblica, poi ricarica la pagina.
+          </p>
+        </div>`;
+    }
+
+    /** Shows the empty-search state. */
+    function renderEmpty() {
+      clearResults();
+      resultsSection.innerHTML = `
+        <div class="state-box">
+          <span class="state-icon" aria-hidden="true">😕</span>
+          <p class="state-title">Nessun risultato</p>
+          <p class="state-description">Prova a controllare l'ortografia del nome.</p>
+        </div>`;
+    }
+
+    /**
+     * Renders the list of matching guest cards.
+     * @param {Commensale[]} diners
+     * @param {string} query
+     */
+    function renderResults(diners, query) {
+      tableViewEl.classList.remove('active');
+      tableViewEl.innerHTML = '';
+
+      if (diners.length === 0) { renderEmpty(); return; }
+
+      const label = diners.length === 1
+        ? '1 risultato'
+        : `${diners.length} risultati`;
+
+      const cards = diners.map(d => `
+        <article class="guest-card">
+          <span class="guest-name">${escapeHtml(d.nomeCompleto)}</span>
+          <button
+            class="table-badge"
+            data-tavolo="${escapeHtml(d.tavolo)}"
+            data-nome="${escapeHtml(d.nomeCompleto)}"
+            aria-label="Visualizza tutti i commensali al tavolo ${escapeHtml(d.tavolo)}"
+          >
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5"
+                 stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+            ${escapeHtml(d.tavolo)}
+          </button>
+        </article>`).join('');
+
+      resultsSection.innerHTML = `
+        <p class="result-meta" aria-live="polite">${label} per &ldquo;${escapeHtml(query)}&rdquo;</p>
+        ${cards}`;
+    }
+
+    /**
+     * Renders the table detail view showing all diners at the given table.
+     * @param {string} tavolo  Table name
+     * @param {string} highlightedName  Full name of the guest who clicked (highlighted in the list)
+     */
+    function renderTableView(tavolo, highlightedName) {
+      resultsSection.innerHTML = '';
+
+      const seated = allDiners.filter(d => d.tavolo === tavolo);
+      const label  = seated.length === 1 ? '1 commensale' : `${seated.length} commensali`;
+
+      const items = seated.map(d => {
+        const isHighlighted = d.nomeCompleto === highlightedName;
+        return `<li class="diner-item${isHighlighted ? ' highlighted' : ''}">${escapeHtml(d.nomeCompleto)}</li>`;
+      }).join('');
+
+      tableViewEl.innerHTML = `
+        <button class="back-btn" id="back-btn" aria-label="Torna ai risultati della ricerca">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5"
+               stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <polyline points="15 18 9 12 15 6"/>
+          </svg>
+          Torna alla ricerca
+        </button>
+        <div class="table-heading">
+          <div class="table-heading-icon" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+              <polyline points="9 22 9 12 15 12 15 22"/>
+            </svg>
+          </div>
+          <div>
+            <p class="table-title">${escapeHtml(tavolo)}</p>
+            <p class="table-subtitle">${label}</p>
+          </div>
+        </div>
+        <ol class="diner-list">${items}</ol>`;
+
+      tableViewEl.classList.add('active');
+      tableViewEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Utilities ─────────────────────────────────────────────────────────────
+
+    /**
+     * Escapes special HTML characters to prevent XSS.
+     * @param {string} str
+     * @returns {string}
+     */
+    function escapeHtml(str) {
+      return str
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    // ── Event listeners ───────────────────────────────────────────────────────
+
+    searchInput.addEventListener('input', () => {
+      const query = searchInput.value.trim();
+
+      tableViewEl.classList.remove('active');
+      tableViewEl.innerHTML = '';
+
+      if (appState !== 'ready') return;
+      if (!query || query.length < MIN_SEARCH_CHARS) { renderIdle(); return; }
+
+      renderResults(filterDiners(query), query);
+    });
+
+    resultsSection.addEventListener('click', e => {
+      const btn = /** @type {HTMLElement} */ (e.target)?.closest('.table-badge');
+      if (!btn) return;
+      const tavolo = /** @type {HTMLElement} */ (btn).dataset['tavolo'] ?? '';
+      const nome   = /** @type {HTMLElement} */ (btn).dataset['nome']   ?? '';
+      if (tavolo) renderTableView(tavolo, nome);
+    });
+
+    tableViewEl.addEventListener('click', e => {
+      if (!(/** @type {Element} */ (e.target))?.closest('#back-btn')) return;
+      tableViewEl.classList.remove('active');
+      tableViewEl.innerHTML = '';
+      const q = searchInput.value.trim();
+      if (q.length >= MIN_SEARCH_CHARS) {
+        renderResults(filterDiners(q), q);
+      } else {
+        renderIdle();
+      }
+    });
+
+    // ── Bootstrap ─────────────────────────────────────────────────────────────
+
+    loadData();
+  </script>
+
+</body>
+</html>
