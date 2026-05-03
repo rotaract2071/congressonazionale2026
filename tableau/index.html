@@ -3,420 +3,451 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tableau · Congresso Nazionale Siena 2026</title>
+    <title>Il mio tavolo – Congresso Nazionale Siena 2026</title>
     <meta
       name="description"
       content="Trova il tuo tavolo al Congresso Nazionale Siena 2026."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
       rel="stylesheet"
     />
     <style>
       :root {
-        color-scheme: light;
-        --color-primary: #d41367;
-        --color-primary-dark: #a90f51;
-        --color-primary-soft: #fde7f1;
-        --color-ink: #1f2937;
-        --color-muted: #5f6b7a;
-        --color-line: #e5e7eb;
-        --color-surface: #ffffff;
-        --color-page: #f8f5f7;
-        --color-success: #0f766e;
-        --shadow-lg: 0 24px 60px rgba(31, 41, 55, 0.12);
-        --shadow-md: 0 16px 36px rgba(31, 41, 55, 0.08);
-        --radius-xl: 28px;
-        --radius-lg: 22px;
-        --radius-md: 16px;
+        --cranberry: #d41367;
+        --cranberry-light: #f9d0e5;
+        --cranberry-dark: #a50f50;
+        --text: #1a1a2e;
+        --text-secondary: #5a5a72;
+        --bg: #f7f7fa;
+        --card-bg: #ffffff;
+        --border: #e2e2ee;
+        --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.06);
+        --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        --radius: 14px;
+        --radius-sm: 8px;
       }
 
-      * {
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --text: #e8e8f4;
+          --text-secondary: #9090aa;
+          --bg: #0e0e1c;
+          --card-bg: #181828;
+          --border: #2a2a40;
+        }
+      }
+
+      *, *::before, *::after {
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
       }
 
       html {
-        font-family: "Open Sans", system-ui, sans-serif;
-        background: var(--color-page);
-        color: var(--color-ink);
+        scroll-behavior: smooth;
       }
 
       body {
-        margin: 0;
-        min-height: 100vh;
-        background:
-          radial-gradient(circle at top, rgba(212, 19, 103, 0.12), transparent 34%),
-          linear-gradient(180deg, #fff 0%, var(--color-page) 100%);
+        font-family: "Open Sans", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100dvh;
+        display: flex;
+        flex-direction: column;
+        -webkit-font-smoothing: antialiased;
       }
 
-      .shell {
-        width: min(100%, 760px);
-        margin: 0 auto;
-        padding: 24px 16px 40px;
+      header {
+        background: var(--cranberry);
+        color: #fff;
+        text-align: center;
+        padding: 2.25rem 1.5rem 2rem;
       }
 
-      .hero,
-      .panel,
-      .result-card,
-      .table-card,
-      .dialog-card {
-        background: rgba(255, 255, 255, 0.9);
-        backdrop-filter: blur(12px);
-        border: 1px solid rgba(255, 255, 255, 0.7);
-        box-shadow: var(--shadow-md);
-      }
-
-      .hero {
-        border-radius: var(--radius-xl);
-        padding: 28px 24px;
-        margin-bottom: 16px;
-      }
-
-      .eyebrow {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin: 0 0 14px;
-        padding: 8px 12px;
-        border-radius: 999px;
-        background: var(--color-primary-soft);
-        color: var(--color-primary-dark);
-        font-size: 0.86rem;
+      header h1 {
+        font-size: 1.3rem;
         font-weight: 700;
-        letter-spacing: 0.02em;
+        letter-spacing: 0.05em;
         text-transform: uppercase;
+        margin-bottom: 0.35rem;
       }
 
-      h1,
-      h2,
-      h3,
-      p {
-        margin: 0;
+      header p {
+        font-size: 0.95rem;
+        font-weight: 300;
+        opacity: 0.88;
       }
 
-      .hero h1 {
-        font-size: clamp(2rem, 6vw, 3rem);
-        line-height: 1.05;
+      main {
+        flex: 1;
+        max-width: 640px;
+        width: 100%;
+        margin: 0 auto;
+        padding: 2rem 1.25rem 3rem;
       }
 
-      .hero p {
-        margin-top: 14px;
-        color: var(--color-muted);
-        font-size: 1rem;
-        line-height: 1.6;
-      }
-
-      .layout {
-        display: grid;
-        gap: 16px;
-      }
-
-      .panel {
-        border-radius: var(--radius-lg);
-        padding: 22px 20px;
+      .search-section {
+        margin-bottom: 1.75rem;
       }
 
       .search-label {
         display: block;
-        margin-bottom: 10px;
-        font-size: 0.94rem;
+        font-size: 0.75rem;
         font-weight: 700;
+        color: var(--text-secondary);
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        margin-bottom: 0.6rem;
       }
 
-      .search-wrap {
+      .search-wrapper {
         position: relative;
-      }
-
-      .search-input {
-        width: 100%;
-        min-height: 60px;
-        padding: 0 18px 0 52px;
-        border: 1px solid rgba(212, 19, 103, 0.18);
-        border-radius: 18px;
-        background: #fff;
-        color: var(--color-ink);
-        font: inherit;
-        font-size: 1rem;
-        transition:
-          border-color 0.2s ease,
-          box-shadow 0.2s ease,
-          transform 0.2s ease;
-      }
-
-      .search-input:focus {
-        outline: none;
-        border-color: rgba(212, 19, 103, 0.55);
-        box-shadow: 0 0 0 4px rgba(212, 19, 103, 0.12);
-        transform: translateY(-1px);
       }
 
       .search-icon {
         position: absolute;
+        left: 1rem;
         top: 50%;
-        left: 18px;
         transform: translateY(-50%);
-        font-size: 1.15rem;
+        color: var(--cranberry);
+        pointer-events: none;
+        display: flex;
       }
 
-      .status {
-        margin-top: 14px;
-        color: var(--color-muted);
-        font-size: 0.95rem;
-        line-height: 1.5;
+      .search-input {
+        width: 100%;
+        padding: 0.9rem 1rem 0.9rem 3rem;
+        font-family: inherit;
+        font-size: 1rem;
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        background: var(--card-bg);
+        color: var(--text);
+        outline: none;
+        transition: border-color 0.2s, box-shadow 0.2s;
       }
 
-      .status[data-tone="error"] {
-        color: var(--color-primary-dark);
+      .search-input:focus {
+        border-color: var(--cranberry);
+        box-shadow: 0 0 0 4px rgba(212, 19, 103, 0.12);
       }
 
-      .status[data-tone="success"] {
-        color: var(--color-success);
+      .search-input::placeholder {
+        color: #aaaacc;
       }
 
-      .results {
-        display: grid;
-        gap: 14px;
-      }
-
-      .result-card,
-      .table-card {
-        border-radius: var(--radius-md);
-        padding: 18px;
-      }
-
-      .result-card h3,
-      .table-card h3 {
-        font-size: 1.05rem;
-      }
-
-      .result-meta,
-      .table-meta {
-        margin-top: 10px;
-        color: var(--color-muted);
-        line-height: 1.5;
-      }
-
-      .table-button,
-      .ghost-button,
-      .primary-button {
-        appearance: none;
-        border: none;
-        border-radius: 999px;
-        font: inherit;
+      .result-meta {
+        font-size: 0.78rem;
         font-weight: 700;
-        cursor: pointer;
-        transition:
-          transform 0.2s ease,
-          box-shadow 0.2s ease,
-          background 0.2s ease,
-          color 0.2s ease;
+        color: var(--text-secondary);
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        margin-bottom: 0.85rem;
       }
 
-      .table-button,
-      .primary-button {
-        padding: 10px 16px;
-        background: var(--color-primary);
-        color: #fff;
-        box-shadow: 0 10px 20px rgba(212, 19, 103, 0.2);
-      }
-
-      .table-button:hover,
-      .table-button:focus-visible,
-      .primary-button:hover,
-      .primary-button:focus-visible {
-        background: var(--color-primary-dark);
-        transform: translateY(-1px);
-      }
-
-      .ghost-button {
-        padding: 10px 16px;
-        background: transparent;
-        color: var(--color-muted);
-      }
-
-      .ghost-button:hover,
-      .ghost-button:focus-visible {
-        background: rgba(31, 41, 55, 0.06);
-        color: var(--color-ink);
-      }
-
-      .card-actions,
-      .dialog-actions {
+      .guest-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 1.1rem 1.4rem;
+        margin-bottom: 0.65rem;
+        box-shadow: var(--shadow-sm);
+        transition: transform 0.15s, box-shadow 0.15s;
         display: flex;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-top: 16px;
-      }
-
-      .empty-state {
-        border: 1px dashed rgba(212, 19, 103, 0.24);
-        border-radius: var(--radius-md);
-        padding: 20px;
-        color: var(--color-muted);
-        background: rgba(255, 255, 255, 0.72);
-        line-height: 1.6;
-      }
-
-      .hint-list,
-      .guest-list {
-        margin: 12px 0 0;
-        padding-left: 18px;
-        color: var(--color-muted);
-        line-height: 1.6;
-      }
-
-      dialog {
-        width: min(100%, 560px);
-        border: none;
-        padding: 0;
-        background: transparent;
-      }
-
-      dialog::backdrop {
-        background: rgba(15, 23, 42, 0.45);
-        backdrop-filter: blur(4px);
-      }
-
-      .dialog-card {
-        border-radius: var(--radius-xl);
-        padding: 24px;
-        box-shadow: var(--shadow-lg);
-      }
-
-      .dialog-card header {
-        display: flex;
+        align-items: center;
         justify-content: space-between;
-        gap: 12px;
-        align-items: flex-start;
+        gap: 1rem;
       }
 
-      .dialog-card p {
-        margin-top: 10px;
-        color: var(--color-muted);
-        line-height: 1.6;
+      .guest-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow);
       }
 
-      .guest-list {
-        display: grid;
-        gap: 10px;
-        padding: 0;
-        list-style: none;
+      .guest-name {
+        font-size: 1rem;
+        font-weight: 600;
+        flex: 1;
+        min-width: 0;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
-      .guest-list li {
-        padding: 14px 16px;
-        border-radius: 16px;
-        background: rgba(212, 19, 103, 0.06);
-        color: var(--color-ink);
+      .table-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background: var(--cranberry-light);
+        color: var(--cranberry-dark);
+        font-family: inherit;
+        font-size: 0.83rem;
+        font-weight: 700;
+        padding: 0.35rem 0.85rem;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        white-space: nowrap;
+        transition: background 0.15s, color 0.15s;
       }
 
-      .guest-list li strong {
+      .table-badge:hover,
+      .table-badge:focus-visible {
+        background: var(--cranberry);
+        color: #fff;
+        outline: none;
+      }
+
+      .table-view {
+        display: none;
+      }
+
+      .table-view.active {
         display: block;
       }
 
-      .guest-list li span {
-        display: inline-block;
-        margin-top: 4px;
-        color: var(--color-muted);
+      .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        background: none;
+        border: none;
+        color: var(--cranberry);
+        font-family: inherit;
+        font-size: 0.88rem;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        cursor: pointer;
+        padding: 0.4rem 0;
+        margin-bottom: 1.5rem;
       }
 
-      .visually-hidden {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border: 0;
+      .back-btn:hover,
+      .back-btn:focus-visible {
+        opacity: 0.7;
+        outline: none;
       }
 
-      @media (max-width: 640px) {
-        .shell {
-          padding: 14px 12px 28px;
+      .table-heading {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        margin-bottom: 1.4rem;
+      }
+
+      .table-heading-icon {
+        width: 40px;
+        height: 40px;
+        background: var(--cranberry);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #fff;
+        flex-shrink: 0;
+      }
+
+      .table-title {
+        font-size: 1.35rem;
+        font-weight: 700;
+        color: var(--cranberry);
+      }
+
+      .table-subtitle {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-top: 0.1rem;
+      }
+
+      .diner-list {
+        list-style: none;
+      }
+
+      .diner-item {
+        padding: 0.75rem 1.2rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        margin-bottom: 0.45rem;
+        font-size: 0.95rem;
+        box-shadow: var(--shadow-sm);
+      }
+
+      .diner-item.highlighted {
+        border-color: var(--cranberry);
+        background: var(--cranberry-light);
+        font-weight: 700;
+      }
+
+      .state-box {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--text-secondary);
+      }
+
+      .state-icon {
+        font-size: 2.6rem;
+        margin-bottom: 1rem;
+        display: block;
+      }
+
+      .state-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.4rem;
+        color: var(--text);
+      }
+
+      .state-description {
+        font-size: 0.875rem;
+        line-height: 1.65;
+      }
+
+      .loader {
+        text-align: center;
+        padding: 3rem;
+      }
+
+      .spinner {
+        width: 36px;
+        height: 36px;
+        border: 3px solid var(--cranberry-light);
+        border-top-color: var(--cranberry);
+        border-radius: 50%;
+        animation: spin 0.75s linear infinite;
+        margin: 0 auto 1rem;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .loader-text {
+        font-size: 0.88rem;
+        color: var(--text-secondary);
+      }
+
+      .config-notice {
+        background: #fffbee;
+        border: 1px solid #ffe082;
+        border-radius: var(--radius);
+        padding: 1.25rem 1.5rem;
+        font-size: 0.875rem;
+        line-height: 1.7;
+        color: #6b5300;
+      }
+
+      .config-notice strong {
+        display: block;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .config-notice code {
+        font-family: "Courier New", monospace;
+        font-size: 0.82em;
+        background: rgba(0, 0, 0, 0.07);
+        padding: 0.1em 0.35em;
+        border-radius: 4px;
+      }
+
+      .config-list {
+        margin-top: 0.75rem;
+        padding-left: 1.1rem;
+      }
+
+      .config-list li + li {
+        margin-top: 0.35rem;
+      }
+
+      footer {
+        text-align: center;
+        padding: 1.25rem;
+        font-size: 0.72rem;
+        color: var(--text-secondary);
+        letter-spacing: 0.04em;
+      }
+
+      @media (max-width: 520px) {
+        .guest-card {
+          align-items: flex-start;
+          flex-direction: column;
         }
 
-        .hero,
-        .panel,
-        .dialog-card {
-          padding: 20px 18px;
-        }
-
-        .search-input {
-          min-height: 56px;
-          padding-left: 48px;
+        .table-badge {
+          align-self: flex-start;
         }
       }
     </style>
   </head>
   <body>
-    <main class="shell">
-      <section class="hero" aria-labelledby="page-title">
-        <p class="eyebrow">Congresso Nazionale Siena 2026</p>
-        <h1 id="page-title">Trova il tuo tavolo</h1>
-        <p>
-          Inserisci nome e cognome per visualizzare il tuo tavolo e, con un
-          tocco, scoprire chi è seduto con te.
-        </p>
+    <header>
+      <h1>Congresso Nazionale Siena 2026</h1>
+      <p>Trova il tuo posto a tavola</p>
+    </header>
+
+    <main>
+      <section class="search-section" aria-label="Ricerca commensale">
+        <label for="search-input" class="search-label">Cerca il tuo nome</label>
+        <div class="search-wrapper">
+          <span class="search-icon" aria-hidden="true">
+            <svg
+              width="18"
+              height="18"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+          </span>
+          <input
+            type="search"
+            id="search-input"
+            class="search-input"
+            placeholder="Nome e cognome…"
+            autocomplete="off"
+            autocorrect="off"
+            spellcheck="false"
+            aria-label="Cerca il tuo nome"
+          />
+        </div>
       </section>
 
-      <div class="layout">
-        <section class="panel" aria-labelledby="search-title">
-          <h2 id="search-title" class="visually-hidden">Ricerca invitato</h2>
-          <label class="search-label" for="guest-search">Nome e cognome</label>
-          <div class="search-wrap">
-            <span class="search-icon" aria-hidden="true">⌕</span>
-            <input
-              id="guest-search"
-              class="search-input"
-              type="search"
-              inputmode="search"
-              autocomplete="name"
-              placeholder="Es. Mario Rossi"
-            />
-          </div>
-          <p id="status" class="status" aria-live="polite"></p>
-        </section>
+      <section
+        id="results-section"
+        aria-live="polite"
+        aria-atomic="false"
+        aria-label="Risultati ricerca"
+      ></section>
 
-        <section class="panel" aria-labelledby="results-title">
-          <h2 id="results-title">Risultati</h2>
-          <div id="results" class="results" aria-live="polite"></div>
-        </section>
-      </div>
+      <section
+        id="table-view"
+        class="table-view"
+        aria-label="Commensali al tavolo"
+        aria-live="polite"
+      ></section>
     </main>
 
-    <dialog id="table-dialog" aria-labelledby="table-dialog-title">
-      <article class="dialog-card">
-        <header>
-          <div>
-            <h2 id="table-dialog-title"></h2>
-            <p id="table-dialog-description"></p>
-          </div>
-          <form method="dialog">
-            <button type="submit" class="ghost-button" aria-label="Chiudi">
-              Chiudi
-            </button>
-          </form>
-        </header>
-        <ul id="table-dialog-guests" class="guest-list"></ul>
-        <div class="dialog-actions">
-          <form method="dialog">
-            <button type="submit" class="primary-button">Fatto</button>
-          </form>
-        </div>
-      </article>
-    </dialog>
+    <footer>
+      <p>Rotaract Club &mdash; Congresso Nazionale Siena 2026</p>
+    </footer>
 
     <script type="module">
       /**
-       * @typedef {Object} SpreadsheetConfig
-       * @property {string} sheetId
-       * @property {string} gid
+       * @typedef {Object} SheetsConfig
+       * @property {string} apiKey
+       * @property {string} spreadsheetId
        * @property {string} sheetName
-       * @property {string} csvUrl
+       * @property {string} range
        */
 
       /**
@@ -430,417 +461,121 @@
        * @property {Record<string, string>} source
        */
 
-      /** @type {SpreadsheetConfig} */
-      const DEFAULT_CONFIG = {
-        sheetId: "",
-        gid: "",
+      /** @type {SheetsConfig} */
+      const DEFAULT_SHEETS_CONFIG = {
+        apiKey: "",
+        spreadsheetId: "",
         sheetName: "",
-        csvUrl: "",
+        range: "",
       };
 
-      /** @type {HTMLInputElement} */
-      const searchInput = document.querySelector("#guest-search");
-      /** @type {HTMLParagraphElement} */
-      const status = document.querySelector("#status");
-      /** @type {HTMLDivElement} */
-      const resultsContainer = document.querySelector("#results");
-      /** @type {HTMLDialogElement} */
-      const tableDialog = document.querySelector("#table-dialog");
-      /** @type {HTMLHeadingElement} */
-      const tableDialogTitle = document.querySelector("#table-dialog-title");
-      /** @type {HTMLParagraphElement} */
-      const tableDialogDescription = document.querySelector("#table-dialog-description");
-      /** @type {HTMLUListElement} */
-      const tableDialogGuests = document.querySelector("#table-dialog-guests");
+      /** @type {Guest[]} */
+      let allGuests = [];
 
-      /** @type {Guest[]} */
-      let guests = [];
-      /** @type {Guest[]} */
-      let filteredGuests = [];
+      const resultsSection = /** @type {HTMLElement} */ (document.getElementById("results-section"));
+      const tableViewElement = /** @type {HTMLElement} */ (document.getElementById("table-view"));
+      const searchInput = /** @type {HTMLInputElement} */ (document.getElementById("search-input"));
+
       initialize().catch((error) => {
         console.error(error);
-        setStatus("Non è stato possibile caricare i dati dal Google Spreadsheet.", "error");
-        renderErrorState(
-          "Verifica che il foglio sia pubblico e che i parametri `sheetId`, `gid`, `sheet` o `csvUrl` siano corretti.",
-        );
+        renderLoadError();
       });
 
       async function initialize() {
+        const config = getSheetsConfig();
+
+        if (!hasSheetsConfig(config)) {
+          searchInput.disabled = true;
+          renderConfigNotice();
+          hideTableView();
+          return;
+        }
+
         searchInput.disabled = true;
-        setStatus("Caricamento invitati in corso…");
-        renderLoadingState();
+        renderLoader();
+        hideTableView();
 
-        const config = getSpreadsheetConfig();
-        if (!hasSpreadsheetSource(config)) {
-          setStatus(
-            "Configura il collegamento al Google Spreadsheet per iniziare.",
-            "error",
-          );
-          renderConfigurationHelp();
-          return;
-        }
-
-        guests = await fetchGuests(config);
-        filteredGuests = guests;
+        const values = await fetchSheetValues(config);
+        allGuests = normalizeGuests(values);
         searchInput.disabled = false;
-        searchInput.addEventListener("input", handleSearchInput);
 
-        if (guests.length === 0) {
-          setStatus("Nessun invitato disponibile nel foglio.", "error");
-          renderEmptyState(
-            "Il foglio è stato letto correttamente ma non contiene record validi.",
-          );
+        if (allGuests.length === 0) {
+          renderNoData();
           return;
         }
 
-        setStatus(
-          `${guests.length} invitati caricati. Inizia a digitare per cercare il tuo nominativo.`,
-          "success",
-        );
-        renderResults(guests);
+        renderIdle();
       }
 
       /**
-       * @returns {SpreadsheetConfig}
+       * @returns {SheetsConfig}
        */
-      function getSpreadsheetConfig() {
+      function getSheetsConfig() {
         const params = new URLSearchParams(window.location.search);
+
         return {
-          sheetId: params.get("sheetId")?.trim() ?? DEFAULT_CONFIG.sheetId,
-          gid: params.get("gid")?.trim() ?? DEFAULT_CONFIG.gid,
-          sheetName: params.get("sheet")?.trim() ?? DEFAULT_CONFIG.sheetName,
-          csvUrl: params.get("csvUrl")?.trim() ?? DEFAULT_CONFIG.csvUrl,
+          apiKey: params.get("apiKey")?.trim() ?? DEFAULT_SHEETS_CONFIG.apiKey,
+          spreadsheetId:
+            params.get("sheetId")?.trim() ?? DEFAULT_SHEETS_CONFIG.spreadsheetId,
+          sheetName: params.get("sheet")?.trim() ?? DEFAULT_SHEETS_CONFIG.sheetName,
+          range: params.get("range")?.trim() ?? DEFAULT_SHEETS_CONFIG.range,
         };
       }
 
       /**
-       * @param {SpreadsheetConfig} config
+       * @param {SheetsConfig} config
        * @returns {boolean}
        */
-      function hasSpreadsheetSource(config) {
-        return Boolean(config.csvUrl || config.sheetId);
+      function hasSheetsConfig(config) {
+        return Boolean(config.apiKey && config.spreadsheetId && (config.range || config.sheetName));
       }
 
       /**
-       * @param {SpreadsheetConfig} config
-       * @returns {Promise<Guest[]>}
+       * @param {SheetsConfig} config
+       * @returns {Promise<string[][]>}
        */
-      async function fetchGuests(config) {
-        const response = await fetch(buildSpreadsheetUrl(config), {
-          headers: {
-            Accept: "text/csv, text/plain, */*",
-          },
-        });
+      async function fetchSheetValues(config) {
+        const range = config.range || config.sheetName;
+        const encodedRange = encodeURIComponent(range);
+        const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values/${encodedRange}?key=${config.apiKey}`;
+        const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error(`Spreadsheet request failed with status ${response.status}`);
+          throw new Error(`Google Sheets API request failed with status ${response.status}`);
         }
 
-        const csvText = await response.text();
-        const rows = parseCsv(csvText);
-        return normalizeGuests(rows);
+        /** @type {{ values?: string[][], error?: { message?: string } }} */
+        const data = await response.json();
+
+        if (data.error?.message) {
+          throw new Error(data.error.message);
+        }
+
+        return Array.isArray(data.values) ? data.values : [];
       }
 
       /**
-       * @param {SpreadsheetConfig} config
-       * @returns {string}
+       * @param {string[][]} values
+       * @returns {Guest[]}
        */
-      function buildSpreadsheetUrl(config) {
-        if (config.csvUrl) {
-          return config.csvUrl;
-        }
-
-        const url = new URL(
-          `https://docs.google.com/spreadsheets/d/${encodeURIComponent(config.sheetId)}/gviz/tq`,
-        );
-        url.searchParams.set("tqx", "out:csv");
-
-        if (config.gid) {
-          url.searchParams.set("gid", config.gid);
-        }
-
-        if (config.sheetName) {
-          url.searchParams.set("sheet", config.sheetName);
-        }
-
-        return url.toString();
-      }
-
-      /**
-       * @param {InputEvent} event
-       */
-      function handleSearchInput(event) {
-        const value = String(event.target?.value ?? "");
-        const query = normalizeText(value);
-
-        if (!query) {
-          filteredGuests = guests;
-          setStatus(
-            `${guests.length} invitati caricati. Inizia a digitare per cercare il tuo nominativo.`,
-            "success",
-          );
-          renderResults(filteredGuests);
-          return;
-        }
-
-        filteredGuests = guests
-          .filter((guest) => guest.searchText.includes(query))
-          .sort((left, right) => left.fullName.localeCompare(right.fullName, "it"));
-
-        if (filteredGuests.length === 0) {
-          setStatus("Nessun risultato trovato. Prova con meno lettere o senza accenti.");
-          renderEmptyState("Non risultano invitati che corrispondono alla ricerca.");
-          return;
-        }
-
-        setStatus(
-          filteredGuests.length === 1
-            ? "1 risultato trovato."
-            : `${filteredGuests.length} risultati trovati.`,
-          "success",
-        );
-        renderResults(filteredGuests);
-      }
-
-      /**
-       * @param {Guest[]} items
-       */
-      function renderResults(items) {
-        resultsContainer.replaceChildren();
-
-        if (items.length === 0) {
-          renderEmptyState("Nessun invitato da visualizzare.");
-          return;
-        }
-
-        const fragment = document.createDocumentFragment();
-        for (const guest of items) {
-          fragment.appendChild(createResultCard(guest));
-        }
-
-        resultsContainer.appendChild(fragment);
-      }
-
-      /**
-       * @param {Guest} guest
-       * @returns {HTMLElement}
-       */
-      function createResultCard(guest) {
-        const article = document.createElement("article");
-        article.className = "result-card";
-
-        const title = document.createElement("h3");
-        title.textContent = guest.fullName;
-
-        const meta = document.createElement("p");
-        meta.className = "result-meta";
-        meta.textContent = "Tavolo assegnato";
-
-        const actions = document.createElement("div");
-        actions.className = "card-actions";
-
-        const tableButton = document.createElement("button");
-        tableButton.type = "button";
-        tableButton.className = "table-button";
-        tableButton.textContent = guest.tableName;
-        tableButton.addEventListener("click", () => openTableDialog(guest.tableName, guest.id));
-
-        actions.appendChild(tableButton);
-        article.append(title, meta, actions);
-        return article;
-      }
-
-      function renderLoadingState() {
-        renderEmptyState("Sto recuperando i nominativi dal Google Spreadsheet…");
-      }
-
-      /**
-       * @param {string} message
-       */
-      function renderEmptyState(message) {
-        resultsContainer.replaceChildren();
-        const empty = document.createElement("div");
-        empty.className = "empty-state";
-        empty.textContent = message;
-        resultsContainer.appendChild(empty);
-      }
-
-      function renderConfigurationHelp() {
-        resultsContainer.replaceChildren();
-
-        const container = document.createElement("div");
-        container.className = "empty-state";
-
-        const title = document.createElement("strong");
-        title.textContent = "Configurazione Google Spreadsheet mancante";
-
-        const description = document.createElement("p");
-        description.className = "result-meta";
-        description.textContent =
-          "Passa il foglio tramite query string oppure valorizza le costanti iniziali nel file HTML.";
-
-        const hintList = document.createElement("ul");
-        hintList.className = "hint-list";
-        hintList.innerHTML = [
-          "<li><code>?sheetId=SPREADSHEET_ID&amp;gid=0</code></li>",
-          "<li><code>?sheetId=SPREADSHEET_ID&amp;sheet=Invitati</code></li>",
-          "<li><code>?csvUrl=https://...</code></li>",
-        ].join("");
-
-        container.append(title, description, hintList);
-        resultsContainer.appendChild(container);
-      }
-
-      /**
-       * @param {string} message
-       */
-      function renderErrorState(message) {
-        resultsContainer.replaceChildren();
-        const container = document.createElement("div");
-        container.className = "empty-state";
-        container.textContent = message;
-        resultsContainer.appendChild(container);
-      }
-
-      /**
-       * @param {string} tableName
-       * @param {string} selectedGuestId
-       */
-      function openTableDialog(tableName, selectedGuestId) {
-        const tableGuests = guests
-          .filter((guest) => guest.tableName === tableName)
-          .sort((left, right) => left.fullName.localeCompare(right.fullName, "it"));
-
-        tableDialogTitle.textContent = tableName;
-        tableDialogDescription.textContent =
-          tableGuests.length === 1
-            ? "Al momento risulta una sola persona associata a questo tavolo."
-            : `${tableGuests.length} persone risultano assegnate a questo tavolo.`;
-
-        tableDialogGuests.replaceChildren(
-          ...tableGuests.map((guest) => {
-            const item = document.createElement("li");
-            const name = document.createElement("strong");
-            name.textContent = guest.fullName;
-
-            const detail = document.createElement("span");
-            detail.textContent =
-              guest.id === selectedGuestId ? "Sei qui" : "Commensale del tuo tavolo";
-
-            item.append(name, detail);
-            return item;
-          }),
-        );
-
-        if (!tableDialog.open) {
-          tableDialog.showModal();
-        }
-      }
-
-      /**
-       * @param {string} message
-       * @param {"default" | "error" | "success"} [tone]
-       */
-      function setStatus(message, tone = "default") {
-        status.textContent = message;
-        status.dataset.tone = tone;
-      }
-
-      /**
-       * @param {string} csvText
-       * @returns {Array<Record<string, string>>}
-       */
-      function parseCsv(csvText) {
-        /** @type {string[][]} */
-        const rows = [];
-        /** @type {string[]} */
-        let currentRow = [];
-        let currentValue = "";
-        let isQuoted = false;
-        let skipNextChar = false;
-
-        for (let charIndex = 0; charIndex < csvText.length; charIndex += 1) {
-          if (skipNextChar) {
-            skipNextChar = false;
-            continue;
-          }
-
-          const char = csvText[charIndex];
-          const nextChar = csvText[charIndex + 1];
-
-          if (char === '"') {
-            if (isQuoted && nextChar === '"') {
-              currentValue += '"';
-              skipNextChar = true;
-              continue;
-            }
-
-            isQuoted = !isQuoted;
-            continue;
-          }
-
-          if (char === "," && !isQuoted) {
-            currentRow.push(currentValue.trim());
-            currentValue = "";
-            continue;
-          }
-
-          if ((char === "\n" || char === "\r") && !isQuoted) {
-            if (char === "\r" && nextChar === "\n") {
-              skipNextChar = true;
-            }
-
-            currentRow.push(currentValue.trim());
-            if (hasNonEmptyValue(currentRow)) {
-              rows.push(currentRow);
-            }
-            currentRow = [];
-            currentValue = "";
-            continue;
-          }
-
-          currentValue += char;
-        }
-
-        if (currentValue.length > 0 || currentRow.length > 0) {
-          currentRow.push(currentValue.trim());
-          if (hasNonEmptyValue(currentRow)) {
-            rows.push(currentRow);
-          }
-        }
-
-        if (rows.length === 0) {
+      function normalizeGuests(values) {
+        if (values.length === 0) {
           return [];
         }
 
-        const [headers, ...dataRows] = rows;
-        return dataRows.map((record) => {
-          /** @type {Record<string, string>} */
-          const entry = {};
-          headers.forEach((header, headerIndex) => {
-            entry[header] = record[headerIndex]?.trim() ?? "";
-          });
-          return entry;
-        });
-      }
+        const [headers, ...dataRows] = values;
 
-      /**
-       * @param {string[]} row
-       * @returns {boolean}
-       */
-      function hasNonEmptyValue(row) {
-        return row.some((value) => value.length > 0);
-      }
+        return dataRows
+          .map((rowValues, rowIndex) => {
+            /** @type {Record<string, string>} */
+            const rawRow = {};
 
-      /**
-       * @param {Array<Record<string, string>>} rows
-       * @returns {Guest[]}
-       */
-      function normalizeGuests(rows) {
-        return rows
-          .map((row, index) => {
+            headers.forEach((header, headerIndex) => {
+              rawRow[String(header ?? "").trim()] = String(rowValues[headerIndex] ?? "").trim();
+            });
+
             const normalizedRow = Object.fromEntries(
-              Object.entries(row).map(([key, value]) => [normalizeHeader(key), String(value).trim()]),
+              Object.entries(rawRow).map(([key, value]) => [normalizeHeader(key), value]),
             );
 
             const firstName =
@@ -852,7 +587,9 @@
                 "nomecognome",
                 "nomeecognome",
                 "fullname",
+                "nomecompleto",
                 "nominativo",
+                "name",
                 "guest",
                 "ospite",
                 "partecipante",
@@ -860,11 +597,12 @@
             const tableName =
               pickFirstValue(normalizedRow, [
                 "tavolo",
-                "tableau",
                 "table",
+                "tableau",
                 "tablename",
                 "nometavolo",
                 "tavoloassegnato",
+                "table_name",
               ]) ?? "";
 
             const fullName = combinedName || [firstName, lastName].filter(Boolean).join(" ").trim();
@@ -873,18 +611,238 @@
             }
 
             return {
-              id: `${index}-${normalizeText(fullName)}-${normalizeText(tableName)}`,
+              id: `${rowIndex}-${normalizeText(fullName)}-${normalizeText(tableName)}`,
               fullName,
               firstName,
               lastName,
               tableName,
               searchText: normalizeText(fullName),
-              source: Object.fromEntries(
-                Object.entries(row).map(([key, value]) => [key, String(value).trim()]),
-              ),
+              source: rawRow,
             };
           })
           .filter((guest) => guest !== null);
+      }
+
+      function renderLoader() {
+        resultsSection.innerHTML = `
+          <div class="loader" role="status" aria-live="polite">
+            <div class="spinner" aria-hidden="true"></div>
+            <p class="loader-text">Sto recuperando i tavoli dal foglio Google…</p>
+          </div>
+        `;
+      }
+
+      function renderIdle() {
+        resultsSection.innerHTML = `
+          <div class="state-box">
+            <span class="state-icon" aria-hidden="true">🍽️</span>
+            <p class="state-title">Inserisci nome e cognome</p>
+            <p class="state-description">
+              Inizia a digitare per trovare rapidamente il tuo tavolo e vedere con chi sei seduto.
+            </p>
+          </div>
+        `;
+      }
+
+      function renderNoData() {
+        resultsSection.innerHTML = `
+          <div class="state-box">
+            <span class="state-icon" aria-hidden="true">📭</span>
+            <p class="state-title">Nessun invitato disponibile</p>
+            <p class="state-description">
+              Il foglio è stato letto correttamente, ma non contiene righe valide con nominativo e tavolo.
+            </p>
+          </div>
+        `;
+      }
+
+      function renderConfigNotice() {
+        resultsSection.innerHTML = `
+          <div class="config-notice">
+            <strong>Configurazione Google Sheets mancante</strong>
+            Inserisci nel file HTML oppure nella query string i valori per
+            <code>apiKey</code>, <code>sheetId</code> e <code>sheet</code> o <code>range</code>.
+            <ul class="config-list">
+              <li><code>?apiKey=...&amp;sheetId=...&amp;sheet=Invitati</code></li>
+              <li><code>?apiKey=...&amp;sheetId=...&amp;range=Invitati!A:Z</code></li>
+            </ul>
+          </div>
+        `;
+      }
+
+      function renderLoadError() {
+        resultsSection.innerHTML = `
+          <div class="state-box">
+            <span class="state-icon" aria-hidden="true">⚠️</span>
+            <p class="state-title">Impossibile caricare il foglio</p>
+            <p class="state-description">
+              Verifica API key, spreadsheet ID, nome del foglio o range. Il fetch usa Google Sheets API v4.
+            </p>
+          </div>
+        `;
+      }
+
+      /**
+       * @param {string} query
+       */
+      function renderEmpty(query) {
+        const safeQuery = escapeHtml(query);
+        resultsSection.innerHTML = `
+          <div class="state-box">
+            <span class="state-icon" aria-hidden="true">🔎</span>
+            <p class="state-title">Nessun risultato</p>
+            <p class="state-description">
+              Nessun invitato corrisponde a <strong>“${safeQuery}”</strong>.
+            </p>
+          </div>
+        `;
+      }
+
+      /**
+       * @param {Guest[]} guests
+       * @param {string} query
+       */
+      function renderResults(guests, query) {
+        hideTableView();
+
+        if (guests.length === 0) {
+          renderEmpty(query);
+          return;
+        }
+
+        resultsSection.replaceChildren();
+
+        const meta = document.createElement("p");
+        meta.className = "result-meta";
+        meta.textContent = guests.length === 1 ? "1 risultato" : `${guests.length} risultati`;
+        resultsSection.appendChild(meta);
+
+        const fragment = document.createDocumentFragment();
+        for (const guest of guests) {
+          fragment.appendChild(createGuestCard(guest));
+        }
+        resultsSection.appendChild(fragment);
+      }
+
+      /**
+       * @param {Guest} guest
+       * @returns {HTMLElement}
+       */
+      function createGuestCard(guest) {
+        const article = document.createElement("article");
+        article.className = "guest-card";
+
+        const name = document.createElement("span");
+        name.className = "guest-name";
+        name.textContent = guest.fullName;
+
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "table-badge";
+        button.textContent = guest.tableName;
+        button.setAttribute("aria-label", `Apri il tavolo ${guest.tableName}`);
+        button.addEventListener("click", () => renderTableView(guest.tableName, guest.id));
+
+        article.append(name, button);
+        return article;
+      }
+
+      /**
+       * @param {string} tableName
+       * @param {string} highlightedGuestId
+       */
+      function renderTableView(tableName, highlightedGuestId) {
+        const tableGuests = allGuests
+          .filter((guest) => guest.tableName === tableName)
+          .sort((left, right) => left.fullName.localeCompare(right.fullName, "it"));
+
+        resultsSection.replaceChildren();
+        tableViewElement.replaceChildren();
+
+        const backButton = document.createElement("button");
+        backButton.type = "button";
+        backButton.className = "back-btn";
+        backButton.innerHTML = `<span aria-hidden="true">←</span><span>Torna ai risultati</span>`;
+        backButton.addEventListener("click", () => {
+          const query = searchInput.value.trim();
+          if (!query) {
+            renderIdle();
+            hideTableView();
+            return;
+          }
+
+          renderResults(filterGuests(query), query);
+        });
+
+        const heading = document.createElement("div");
+        heading.className = "table-heading";
+        heading.innerHTML = `
+          <div class="table-heading-icon" aria-hidden="true">🍽️</div>
+          <div>
+            <p class="table-title">${escapeHtml(tableName)}</p>
+            <p class="table-subtitle">${tableGuests.length} commensali a questo tavolo</p>
+          </div>
+        `;
+
+        const list = document.createElement("ul");
+        list.className = "diner-list";
+
+        for (const guest of tableGuests) {
+          const item = document.createElement("li");
+          item.className = "diner-item";
+          if (guest.id === highlightedGuestId) {
+            item.classList.add("highlighted");
+          }
+          item.textContent = guest.fullName;
+          list.appendChild(item);
+        }
+
+        tableViewElement.append(backButton, heading, list);
+        tableViewElement.classList.add("active");
+        tableViewElement.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function hideTableView() {
+        tableViewElement.classList.remove("active");
+        tableViewElement.replaceChildren();
+      }
+
+      /**
+       * @param {string} query
+       * @returns {Guest[]}
+       */
+      function filterGuests(query) {
+        const normalizedQuery = normalizeText(query);
+        const terms = normalizedQuery.split(" ").filter(Boolean);
+
+        return allGuests
+          .filter((guest) => terms.every((term) => guest.searchText.includes(term)))
+          .sort((left, right) => left.fullName.localeCompare(right.fullName, "it"));
+      }
+
+      searchInput.addEventListener("input", () => {
+        hideTableView();
+        const query = searchInput.value.trim();
+
+        if (!query) {
+          renderIdle();
+          return;
+        }
+
+        renderResults(filterGuests(query), query);
+      });
+
+      /**
+       * @param {string} unsafeText
+       * @returns {string}
+       */
+      function escapeHtml(unsafeText) {
+        return unsafeText
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#39;");
       }
 
       /**
