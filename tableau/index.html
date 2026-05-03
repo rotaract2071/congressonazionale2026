@@ -760,10 +760,10 @@
 
         for (let index = 0; index < csvText.length; index += 1) {
           const char = csvText[index];
-          const next = csvText[index + 1];
+          const nextChar = csvText[index + 1];
 
           if (char === '"') {
-            if (isQuoted && next === '"') {
+            if (isQuoted && nextChar === '"') {
               currentValue += '"';
               index += 1;
               continue;
@@ -780,7 +780,7 @@
           }
 
           if ((char === "\n" || char === "\r") && !isQuoted) {
-            if (char === "\r" && next === "\n") {
+            if (char === "\r" && nextChar === "\n") {
               index += 1;
             }
 
@@ -807,8 +807,8 @@
           return [];
         }
 
-        const [headers, ...records] = rows;
-        return records.map((record) => {
+        const [headers, ...dataRows] = rows;
+        return dataRows.map((record) => {
           /** @type {Record<string, string>} */
           const entry = {};
           headers.forEach((header, headerIndex) => {
