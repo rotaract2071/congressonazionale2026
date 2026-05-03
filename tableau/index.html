@@ -478,7 +478,8 @@
 
       initialize().catch((error) => {
         console.error(error);
-        renderLoadError();
+        const message = error instanceof Error ? error.message : "Errore sconosciuto";
+        renderLoadError(message);
       });
 
       async function initialize() {
@@ -541,7 +542,9 @@
         const response = await fetch(url);
 
         if (!response.ok) {
-          throw new Error(`Google Sheets API request failed with status ${response.status}`);
+          throw new Error(
+            `Google Sheets API request failed with status ${response.status} ${response.statusText}. Verifica API key, permessi del foglio e range richiesto.`,
+          );
         }
 
         /** @type {{ values?: string[][], error?: { message?: string } }} */
@@ -670,13 +673,17 @@
         `;
       }
 
-      function renderLoadError() {
+      /**
+       * @param {string} message
+       */
+      function renderLoadError(message) {
+        const safeMessage = escapeHtml(message);
         resultsSection.innerHTML = `
           <div class="state-box">
             <span class="state-icon" aria-hidden="true">⚠️</span>
             <p class="state-title">Impossibile caricare il foglio</p>
             <p class="state-description">
-              Verifica API key, spreadsheet ID, nome del foglio o range. Il fetch usa Google Sheets API v4.
+              ${safeMessage}
             </p>
           </div>
         `;
