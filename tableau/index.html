@@ -757,15 +757,21 @@
         let currentRow = [];
         let currentValue = "";
         let isQuoted = false;
+        let skipNextChar = false;
 
         for (let charIndex = 0; charIndex < csvText.length; charIndex += 1) {
+          if (skipNextChar) {
+            skipNextChar = false;
+            continue;
+          }
+
           const char = csvText[charIndex];
           const nextChar = csvText[charIndex + 1];
 
           if (char === '"') {
             if (isQuoted && nextChar === '"') {
               currentValue += '"';
-              charIndex += 1;
+              skipNextChar = true;
               continue;
             }
 
@@ -781,7 +787,7 @@
 
           if ((char === "\n" || char === "\r") && !isQuoted) {
             if (char === "\r" && nextChar === "\n") {
-              charIndex += 1;
+              skipNextChar = true;
             }
 
             currentRow.push(currentValue.trim());
