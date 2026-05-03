@@ -1,0 +1,6 @@
+- Implementa le app come Single Page Application, in vanilla JavaScript, usando JSDoc per tipizzare il codice.
+- JS e CSS devono essere inline nella pagina HTML
+- Usa JavaScript tag con modalità module
+- Aderisci alle style guidelines del Rotary International a proposito del Rotaract
+- Usa Open Sans come font sensa grazie (come da guidelines)
+- Usa cranberry come colore primario (#D41367)
