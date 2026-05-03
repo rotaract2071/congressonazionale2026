@@ -12,3 +12,5 @@ User story:
 # Implementation notes
 - La webapp si deve connettere a un Google Spreadsheet che contiene tutte le informazioni (è il nostro DB/backend)
 - Il look 'n' feel dev'essere moderno, sobrio ed elegante.
+- L'app sarà interamente implementats in tableau/index.html
+- Usa tag HTML semantici quando opportuno
