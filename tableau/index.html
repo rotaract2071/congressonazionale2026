@@ -785,7 +785,7 @@
             }
 
             currentRow.push(currentValue.trim());
-            if (currentRow.some((value) => value.length > 0)) {
+            if (hasNonEmptyValue(currentRow)) {
               rows.push(currentRow);
             }
             currentRow = [];
@@ -798,7 +798,7 @@
 
         if (currentValue.length > 0 || currentRow.length > 0) {
           currentRow.push(currentValue.trim());
-          if (currentRow.some((value) => value.length > 0)) {
+          if (hasNonEmptyValue(currentRow)) {
             rows.push(currentRow);
           }
         }
@@ -816,6 +816,14 @@
           });
           return entry;
         });
+      }
+
+      /**
+       * @param {string[]} row
+       * @returns {boolean}
+       */
+      function hasNonEmptyValue(row) {
+        return row.some((value) => value.length > 0);
       }
 
       /**
