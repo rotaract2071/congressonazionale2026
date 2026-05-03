@@ -452,8 +452,8 @@
           if (i < line.length && line[i] === ',') i++;
         }
       }
-      // An empty line or a trailing comma both require an extra empty field
-      if (line.length === 0 || line[line.length - 1] === ',') fields.push('');
+      // A trailing comma means there is an empty last field
+      if (line[line.length - 1] === ',') fields.push('');
       return fields;
     }
 
@@ -489,8 +489,9 @@
     function normalizeRow(row) {
       let nome = '', cognome = '', nomeCompleto = '';
 
-      if ((row['nome_completo'] ?? '').trim() || (row['nominativo'] ?? '').trim() || (row['name'] ?? '').trim()) {
-        nomeCompleto = ((row['nome_completo'] ?? '').trim() || (row['nominativo'] ?? '').trim() || (row['name'] ?? '').trim());
+      const fullName = (row['nome_completo'] ?? '').trim() || (row['nominativo'] ?? '').trim() || (row['name'] ?? '').trim();
+      if (fullName) {
+        nomeCompleto = fullName;
         const parts = nomeCompleto.split(/\s+/);
         nome = parts[0] ?? '';
         cognome = parts.slice(1).join(' ');
@@ -749,15 +750,15 @@
     });
 
     resultsSection.addEventListener('click', e => {
-      const btn = /** @type {HTMLElement} */ (e.target)?.closest('.table-badge');
+      const btn = e.target instanceof Element ? e.target.closest('.table-badge') : null;
       if (!btn) return;
-      const tavolo = /** @type {HTMLElement} */ (btn).dataset['tavolo'] ?? '';
-      const nome   = /** @type {HTMLElement} */ (btn).dataset['nome']   ?? '';
+      const tavolo = (/** @type {HTMLElement} */ (btn)).dataset['tavolo'] ?? '';
+      const nome   = (/** @type {HTMLElement} */ (btn)).dataset['nome']   ?? '';
       if (tavolo) renderTableView(tavolo, nome);
     });
 
     tableViewEl.addEventListener('click', e => {
-      if (!(/** @type {Element} */ (e.target))?.closest('#back-btn')) return;
+      if (!(e.target instanceof Element) || !e.target.closest('#back-btn')) return;
       tableViewEl.classList.remove('active');
       tableViewEl.innerHTML = '';
       const q = searchInput.value.trim();
