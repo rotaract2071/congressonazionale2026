@@ -498,7 +498,7 @@
           <span class="guest-name"></span>
           <button type="button" class="table-badge">
             <span class="table-badge-text">
-              <span class="table-badge-label">Tocca per aprire</span>
+              <span class="table-badge-label">Apri tavolo</span>
               <span class="table-badge-name"></span>
             </span>
             <span class="table-badge-icon" aria-hidden="true">→</span>
@@ -753,8 +753,17 @@
         const copy = /** @type {HTMLParagraphElement} */ (notice.querySelector(".config-copy"));
         const examples = notice.querySelectorAll(".config-example");
         title.textContent = "Configurazione Google Sheets mancante";
-        copy.textContent =
-          "Inserisci nel file HTML oppure nella query string i valori per apiKey, sheetId e sheet o range.";
+        copy.replaceChildren(
+          "Inserisci nel file HTML oppure nella query string i valori per ",
+          createCodeElement("apiKey"),
+          ", ",
+          createCodeElement("sheetId"),
+          " e ",
+          createCodeElement("sheet"),
+          " o ",
+          createCodeElement("range"),
+          ".",
+        );
         examples[0].textContent = "?apiKey=...&sheetId=...&sheet=Invitati";
         examples[1].textContent = "?apiKey=...&sheetId=...&range=Invitati!A:Z";
         resultsSection.replaceChildren(notice);
@@ -925,6 +934,16 @@
           throw new Error("Template non valido.");
         }
 
+        return element;
+      }
+
+      /**
+       * @param {string} value
+       * @returns {HTMLElement}
+       */
+      function createCodeElement(value) {
+        const element = document.createElement("code");
+        element.textContent = value;
         return element;
       }
 
