@@ -931,7 +931,7 @@
       function cloneTemplateElement(template) {
         const element = template.content.firstElementChild?.cloneNode(true);
         if (!(element instanceof HTMLElement)) {
-          throw new Error("Template non valido.");
+          throw new Error(`Template element missing or invalid: ${template.id || "unknown-template"}`);
         }
 
         return element;
