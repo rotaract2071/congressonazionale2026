@@ -723,7 +723,7 @@
       function renderLoader() {
         const loaderElement = cloneTemplateElement(loaderTemplate);
         const loaderText = /** @type {HTMLParagraphElement} */ (loaderElement.querySelector(".loader-text"));
-        loaderText.textContent = "Sto recuperando i tavoli dal foglio Google…";
+        loaderText.textContent = "Sto recuperando i dati dei tavoli…";
         resultsSection.replaceChildren(loaderElement);
       }
 
