@@ -178,18 +178,44 @@
       .table-badge {
         display: inline-flex;
         align-items: center;
-        gap: 0.35rem;
+        gap: 0.6rem;
         background: var(--cranberry-light);
         color: var(--cranberry-dark);
         font-family: inherit;
         font-size: 0.83rem;
         font-weight: 700;
-        padding: 0.35rem 0.85rem;
+        padding: 0.55rem 0.9rem;
         border-radius: 999px;
         border: none;
         cursor: pointer;
         white-space: nowrap;
         transition: background 0.15s, color 0.15s;
+      }
+
+      .table-badge-text {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.08rem;
+        text-align: left;
+      }
+
+      .table-badge-label {
+        font-size: 0.6rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+
+      .table-badge-name {
+        font-size: 0.92rem;
+        line-height: 1.1;
+      }
+
+      .table-badge-icon {
+        font-size: 1rem;
+        line-height: 1;
       }
 
       .table-badge:hover,
@@ -276,8 +302,9 @@
       }
 
       .diner-item.highlighted {
-        border-color: var(--cranberry);
-        background: var(--cranberry-light);
+        border-color: var(--cranberry-dark);
+        background: var(--cranberry-dark);
+        color: #fff;
         font-weight: 700;
       }
 
@@ -364,6 +391,10 @@
         margin-top: 0.35rem;
       }
 
+      .config-copy {
+        margin-top: 0.35rem;
+      }
+
       footer {
         text-align: center;
         padding: 1.25rem;
@@ -435,6 +466,64 @@
         aria-label="Commensali al tavolo"
         aria-live="polite"
       ></section>
+
+      <template id="loader-template">
+        <div class="loader" role="status" aria-live="polite">
+          <div class="spinner" aria-hidden="true"></div>
+          <p class="loader-text"></p>
+        </div>
+      </template>
+
+      <template id="state-box-template">
+        <div class="state-box">
+          <span class="state-icon" aria-hidden="true"></span>
+          <p class="state-title"></p>
+          <p class="state-description"></p>
+        </div>
+      </template>
+
+      <template id="config-notice-template">
+        <div class="config-notice">
+          <strong class="config-title"></strong>
+          <p class="config-copy"></p>
+          <ul class="config-list">
+            <li><code class="config-example"></code></li>
+            <li><code class="config-example"></code></li>
+          </ul>
+        </div>
+      </template>
+
+      <template id="guest-card-template">
+        <article class="guest-card">
+          <span class="guest-name"></span>
+          <button type="button" class="table-badge">
+            <span class="table-badge-text">
+              <span class="table-badge-label">Tocca per aprire</span>
+              <span class="table-badge-name"></span>
+            </span>
+            <span class="table-badge-icon" aria-hidden="true">→</span>
+          </button>
+        </article>
+      </template>
+
+      <template id="table-view-template">
+        <div>
+          <button type="button" class="back-btn">
+            <span aria-hidden="true">←</span>
+            <span class="back-btn-label">Torna ai risultati</span>
+          </button>
+
+          <div class="table-heading">
+            <div class="table-heading-icon" aria-hidden="true">🍽️</div>
+            <div>
+              <p class="table-title"></p>
+              <p class="table-subtitle"></p>
+            </div>
+          </div>
+
+          <ul class="diner-list"></ul>
+        </div>
+      </template>
     </main>
 
     <footer>
@@ -475,6 +564,11 @@
       const resultsSection = /** @type {HTMLElement} */ (document.getElementById("results-section"));
       const tableViewElement = /** @type {HTMLElement} */ (document.getElementById("table-view"));
       const searchInput = /** @type {HTMLInputElement} */ (document.getElementById("search-input"));
+      const loaderTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById("loader-template"));
+      const stateBoxTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById("state-box-template"));
+      const configNoticeTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById("config-notice-template"));
+      const guestCardTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById("guest-card-template"));
+      const tableViewTemplate = /** @type {HTMLTemplateElement} */ (document.getElementById("table-view-template"));
 
       initialize().catch((error) => {
         console.error(error);
@@ -627,82 +721,61 @@
       }
 
       function renderLoader() {
-        resultsSection.innerHTML = `
-          <div class="loader" role="status" aria-live="polite">
-            <div class="spinner" aria-hidden="true"></div>
-            <p class="loader-text">Sto recuperando i tavoli dal foglio Google…</p>
-          </div>
-        `;
+        const loaderElement = cloneTemplateElement(loaderTemplate);
+        const loaderText = /** @type {HTMLParagraphElement} */ (loaderElement.querySelector(".loader-text"));
+        loaderText.textContent = "Sto recuperando i tavoli dal foglio Google…";
+        resultsSection.replaceChildren(loaderElement);
       }
 
       function renderIdle() {
-        resultsSection.innerHTML = `
-          <div class="state-box">
-            <span class="state-icon" aria-hidden="true">🍽️</span>
-            <p class="state-title">Inserisci nome e cognome</p>
-            <p class="state-description">
-              Inizia a digitare per trovare rapidamente il tuo tavolo e vedere con chi sei seduto.
-            </p>
-          </div>
-        `;
+        resultsSection.replaceChildren(
+          createStateBox(
+            "🍽️",
+            "Inserisci nome e cognome",
+            "Inizia a digitare per trovare rapidamente il tuo tavolo e vedere con chi sei seduto.",
+          ),
+        );
       }
 
       function renderNoData() {
-        resultsSection.innerHTML = `
-          <div class="state-box">
-            <span class="state-icon" aria-hidden="true">📭</span>
-            <p class="state-title">Nessun invitato disponibile</p>
-            <p class="state-description">
-              Il foglio è stato letto correttamente, ma non contiene righe valide con nominativo e tavolo.
-            </p>
-          </div>
-        `;
+        resultsSection.replaceChildren(
+          createStateBox(
+            "📭",
+            "Nessun invitato disponibile",
+            "Il foglio è stato letto correttamente, ma non contiene righe valide con nominativo e tavolo.",
+          ),
+        );
       }
 
       function renderConfigNotice() {
-        resultsSection.innerHTML = `
-          <div class="config-notice">
-            <strong>Configurazione Google Sheets mancante</strong>
-            Inserisci nel file HTML oppure nella query string i valori per
-            <code>apiKey</code>, <code>sheetId</code> e <code>sheet</code> o <code>range</code>.
-            <ul class="config-list">
-              <li><code>?apiKey=...&amp;sheetId=...&amp;sheet=Invitati</code></li>
-              <li><code>?apiKey=...&amp;sheetId=...&amp;range=Invitati!A:Z</code></li>
-            </ul>
-          </div>
-        `;
+        const notice = cloneTemplateElement(configNoticeTemplate);
+        const title = /** @type {HTMLElement} */ (notice.querySelector(".config-title"));
+        const copy = /** @type {HTMLParagraphElement} */ (notice.querySelector(".config-copy"));
+        const examples = notice.querySelectorAll(".config-example");
+        title.textContent = "Configurazione Google Sheets mancante";
+        copy.textContent =
+          "Inserisci nel file HTML oppure nella query string i valori per apiKey, sheetId e sheet o range.";
+        examples[0].textContent = "?apiKey=...&sheetId=...&sheet=Invitati";
+        examples[1].textContent = "?apiKey=...&sheetId=...&range=Invitati!A:Z";
+        resultsSection.replaceChildren(notice);
       }
 
       /**
        * @param {string} message
        */
       function renderLoadError(message) {
-        const safeMessage = escapeHtml(message);
-        resultsSection.innerHTML = `
-          <div class="state-box">
-            <span class="state-icon" aria-hidden="true">⚠️</span>
-            <p class="state-title">Impossibile caricare il foglio</p>
-            <p class="state-description">
-              ${safeMessage}
-            </p>
-          </div>
-        `;
+        resultsSection.replaceChildren(
+          createStateBox("⚠️", "Impossibile caricare il foglio", message),
+        );
       }
 
       /**
        * @param {string} query
        */
       function renderEmpty(query) {
-        const safeQuery = escapeHtml(query);
-        resultsSection.innerHTML = `
-          <div class="state-box">
-            <span class="state-icon" aria-hidden="true">🔎</span>
-            <p class="state-title">Nessun risultato</p>
-            <p class="state-description">
-              Nessun invitato corrisponde a <strong>“${safeQuery}”</strong>.
-            </p>
-          </div>
-        `;
+        resultsSection.replaceChildren(
+          createStateBox("🔎", "Nessun risultato", `Nessun invitato corrisponde a “${query}”.`),
+        );
       }
 
       /**
@@ -736,21 +809,14 @@
        * @returns {HTMLElement}
        */
       function createGuestCard(guest) {
-        const article = document.createElement("article");
-        article.className = "guest-card";
-
-        const name = document.createElement("span");
-        name.className = "guest-name";
+        const article = cloneTemplateElement(guestCardTemplate);
+        const name = /** @type {HTMLSpanElement} */ (article.querySelector(".guest-name"));
+        const tableName = /** @type {HTMLSpanElement} */ (article.querySelector(".table-badge-name"));
+        const button = /** @type {HTMLButtonElement} */ (article.querySelector(".table-badge"));
         name.textContent = guest.fullName;
-
-        const button = document.createElement("button");
-        button.type = "button";
-        button.className = "table-badge";
-        button.textContent = guest.tableName;
+        tableName.textContent = guest.tableName;
         button.setAttribute("aria-label", `Apri il tavolo ${guest.tableName}`);
         button.addEventListener("click", () => renderTableView(guest.tableName, guest.id));
-
-        article.append(name, button);
         return article;
       }
 
@@ -766,10 +832,11 @@
         resultsSection.replaceChildren();
         tableViewElement.replaceChildren();
 
-        const backButton = document.createElement("button");
-        backButton.type = "button";
-        backButton.className = "back-btn";
-        backButton.innerHTML = `<span aria-hidden="true">←</span><span>Torna ai risultati</span>`;
+        const viewElement = cloneTemplateElement(tableViewTemplate);
+        const backButton = /** @type {HTMLButtonElement} */ (viewElement.querySelector(".back-btn"));
+        const title = /** @type {HTMLParagraphElement} */ (viewElement.querySelector(".table-title"));
+        const subtitle = /** @type {HTMLParagraphElement} */ (viewElement.querySelector(".table-subtitle"));
+        const list = /** @type {HTMLUListElement} */ (viewElement.querySelector(".diner-list"));
         backButton.addEventListener("click", () => {
           const query = searchInput.value.trim();
           if (!query) {
@@ -781,18 +848,8 @@
           renderResults(filterGuests(query), query);
         });
 
-        const heading = document.createElement("div");
-        heading.className = "table-heading";
-        heading.innerHTML = `
-          <div class="table-heading-icon" aria-hidden="true">🍽️</div>
-          <div>
-            <p class="table-title">${escapeHtml(tableName)}</p>
-            <p class="table-subtitle">${tableGuests.length} commensali a questo tavolo</p>
-          </div>
-        `;
-
-        const list = document.createElement("ul");
-        list.className = "diner-list";
+        title.textContent = tableName;
+        subtitle.textContent = `${tableGuests.length} commensali a questo tavolo`;
 
         for (const guest of tableGuests) {
           const item = document.createElement("li");
@@ -804,7 +861,7 @@
           list.appendChild(item);
         }
 
-        tableViewElement.append(backButton, heading, list);
+        tableViewElement.appendChild(viewElement);
         tableViewElement.classList.add("active");
         tableViewElement.scrollIntoView({ behavior: "smooth", block: "start" });
       }
@@ -840,16 +897,35 @@
       });
 
       /**
-       * @param {string} unsafeText
-       * @returns {string}
+       * @param {string} icon
+       * @param {string} title
+       * @param {string} description
+       * @returns {HTMLElement}
        */
-      function escapeHtml(unsafeText) {
-        return unsafeText
-          .replaceAll("&", "&amp;")
-          .replaceAll("<", "&lt;")
-          .replaceAll(">", "&gt;")
-          .replaceAll('"', "&quot;")
-          .replaceAll("'", "&#39;");
+      function createStateBox(icon, title, description) {
+        const element = cloneTemplateElement(stateBoxTemplate);
+        const iconElement = /** @type {HTMLSpanElement} */ (element.querySelector(".state-icon"));
+        const titleElement = /** @type {HTMLParagraphElement} */ (element.querySelector(".state-title"));
+        const descriptionElement = /** @type {HTMLParagraphElement} */ (element.querySelector(".state-description"));
+
+        iconElement.textContent = icon;
+        titleElement.textContent = title;
+        descriptionElement.textContent = description;
+
+        return element;
+      }
+
+      /**
+       * @param {HTMLTemplateElement} template
+       * @returns {HTMLElement}
+       */
+      function cloneTemplateElement(template) {
+        const element = template.content.firstElementChild?.cloneNode(true);
+        if (!(element instanceof HTMLElement)) {
+          throw new Error("Template non valido.");
+        }
+
+        return element;
       }
 
       /**
