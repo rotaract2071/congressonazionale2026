@@ -344,8 +344,6 @@
 
           image.src = sponsor.src;
           image.alt = sponsor.alt;
-          image.loading = "lazy";
-
           grid.append(sponsorFragment);
         }
 
@@ -377,7 +375,7 @@
 
       <template id="sponsor-template">
         <figure class="logo-card">
-          <img />
+          <img loading="lazy" />
         </figure>
       </template>
 
