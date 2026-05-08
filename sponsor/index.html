@@ -309,10 +309,6 @@
       for (const tier of tiers) {
         const tierFragment = tierTemplate.content.cloneNode(true);
 
-        if (!(tierFragment instanceof DocumentFragment)) {
-          continue;
-        }
-
         const section = tierFragment.querySelector(".tier-section");
         const copy = tierFragment.querySelector(".tier-copy");
         const grid = tierFragment.querySelector(".logo-grid");
@@ -331,10 +327,6 @@
 
         for (const sponsor of tier.sponsors) {
           const sponsorFragment = sponsorTemplate.content.cloneNode(true);
-
-          if (!(sponsorFragment instanceof DocumentFragment)) {
-            continue;
-          }
 
           const image = sponsorFragment.querySelector("img");
 
@@ -375,7 +367,7 @@
 
       <template id="sponsor-template">
         <figure class="logo-card">
-          <img loading="lazy" />
+          <img src="" alt="" loading="lazy" />
         </figure>
       </template>
 
