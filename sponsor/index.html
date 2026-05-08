@@ -287,6 +287,7 @@
           ],
         },
       ];
+      const logoPathPattern = /^logos\/[a-z0-9][a-z0-9-]*\.(png|jpe?g|webp|svg)$/i;
       const app = document.querySelector("#app");
       const tierTemplate = document.querySelector("#tier-template");
       const sponsorTemplate = document.querySelector("#sponsor-template");
@@ -325,7 +326,7 @@
         grid.setAttribute("aria-label", tier.copy);
 
         for (const sponsor of tier.sponsors) {
-          if (!sponsor.src.startsWith("logos/")) {
+          if (!logoPathPattern.test(sponsor.src)) {
             throw new Error("Percorso logo sponsor non valido.");
           }
 
@@ -369,6 +370,7 @@
       </template>
 
       <template id="sponsor-template">
+        <!-- Placeholder trasparente 1x1 prima dell'assegnazione del logo reale -->
         <figure class="logo-card">
           <img
             src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
