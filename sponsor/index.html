@@ -287,7 +287,6 @@
           ],
         },
       ];
-
       const app = document.querySelector("#app");
       const tierTemplate = document.querySelector("#tier-template");
       const sponsorTemplate = document.querySelector("#sponsor-template");
@@ -326,6 +325,10 @@
         grid.setAttribute("aria-label", tier.copy);
 
         for (const sponsor of tier.sponsors) {
+          if (!sponsor.src.startsWith("logos/")) {
+            throw new Error("Percorso logo sponsor non valido.");
+          }
+
           const sponsorFragment = sponsorTemplate.content.cloneNode(true);
 
           const image = sponsorFragment.querySelector("img");
@@ -367,7 +370,11 @@
 
       <template id="sponsor-template">
         <figure class="logo-card">
-          <img src="" alt="" loading="lazy" />
+          <img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+            alt=""
+            loading="lazy"
+          />
         </figure>
       </template>
 
