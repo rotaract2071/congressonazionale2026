@@ -1,5 +1,5 @@
 # Context
-La pagina sponsor servirà agli invitati dell'evento Congresso Nazionale Siena 2026 a visualizzare la lista degli sponsor che hanno supportato l'evento.
+La pagina sponsor servirà agli invitati dell'evento Congresso Nazionale Siena 2026 a visualizzare la lista dei loghi degli sponsor che hanno supportato l'evento.
 
 Gli sponsor sono suddivisi in tre tier:
 - Tier A: massima priorità
@@ -8,7 +8,7 @@ Gli sponsor sono suddivisi in tre tier:
 
 Sarà stampato un QR code con l'URL della pagina, che sarà visualizzata esclusivamente da smartphone.
 
-Tutti gli sponsor devono essere mostrati in questa singola pagina.
+Tutte le immagini degli sponsor devono essere mostrati in questa singola pagina.
 
 Layout:
 - Tier A: prima sezione, immagini full-width
