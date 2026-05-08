@@ -318,7 +318,7 @@
           !(copy instanceof HTMLParagraphElement) ||
           !(grid instanceof HTMLDivElement)
         ) {
-          continue;
+          throw new Error("Struttura del template tier non valida.");
         }
 
         copy.textContent = tier.copy;
@@ -331,7 +331,7 @@
           const image = sponsorFragment.querySelector("img");
 
           if (!(image instanceof HTMLImageElement)) {
-            continue;
+            throw new Error("Struttura del template sponsor non valida.");
           }
 
           image.src = sponsor.src;
@@ -339,7 +339,7 @@
           grid.append(sponsorFragment);
         }
 
-        content.append(section);
+        content.append(tierFragment);
       }
 
       app.replaceChildren(content);
