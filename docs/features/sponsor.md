@@ -15,7 +15,7 @@ Layout:
 - Tier B: seconda sezione, immagini half-width
 - Tier C: terza sezione, immagini 1/3 width
 
-Ogni tier devr essere introdotto dai seguenti copy
+Ogni tier deve essere introdotto dai seguenti copy
 - Tier A: "ringraziamo queste realtà per lo straordinario supporto:"
 - Tier B: "ringraziamo queste realtà per il supporto:"
 - Tier C: "ringraziamo queste realtà per i loro prodotti:"
