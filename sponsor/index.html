@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sponsor – Congresso Nazionale Siena 2026</title>
+    <meta
+      name="description"
+      content="Scopri gli sponsor che hanno supportato il Congresso Nazionale Siena 2026."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,400&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --cranberry: #d41367;
+        --cranberry-soft: #fdf1f7;
+        --cranberry-deep: #a50f50;
+        --text: #1d1d2f;
+        --text-secondary: #67677c;
+        --background: #fcfbfd;
+        --surface: #ffffff;
+        --border: rgba(212, 19, 103, 0.12);
+        --shadow: 0 18px 40px rgba(29, 29, 47, 0.08);
+        --radius-xl: 28px;
+        --radius-lg: 20px;
+        --radius-md: 16px;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        font-family: "Open Sans", sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top, rgba(212, 19, 103, 0.08), transparent 34%),
+          linear-gradient(180deg, #fff 0%, var(--background) 100%);
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        width: min(100%, 32rem);
+        margin: 0 auto;
+        padding: 1.5rem 1rem 3rem;
+      }
+
+      .hero {
+        background: linear-gradient(145deg, var(--cranberry) 0%, var(--cranberry-deep) 100%);
+        color: #fff;
+        border-radius: var(--radius-xl);
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.35rem 0.75rem;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.16);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      h1 {
+        margin: 0.9rem 0 0.65rem;
+        font-size: 1.85rem;
+        line-height: 1.15;
+      }
+
+      .hero p {
+        margin: 0;
+        font-size: 0.98rem;
+        line-height: 1.7;
+        color: rgba(255, 255, 255, 0.88);
+      }
+
+      .content {
+        margin-top: 1.25rem;
+        display: grid;
+        gap: 1.1rem;
+      }
+
+      .tier-section {
+        background: rgba(255, 255, 255, 0.88);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.72);
+        border-radius: var(--radius-xl);
+        padding: 1.2rem;
+        box-shadow: var(--shadow);
+      }
+
+      .tier-copy {
+        margin: 0 0 1rem;
+        font-size: 0.95rem;
+        line-height: 1.7;
+        color: var(--text-secondary);
+      }
+
+      .logo-grid {
+        display: grid;
+        gap: 0.85rem;
+      }
+
+      .logo-grid[data-columns="1"] {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .logo-grid[data-columns="2"] {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .logo-grid[data-columns="3"] {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .logo-card {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 5.8rem;
+        padding: 0.9rem;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-lg);
+      }
+
+      .logo-grid[data-columns="1"] .logo-card {
+        min-height: 8rem;
+        padding: 1.25rem;
+      }
+
+      .logo-grid[data-columns="2"] .logo-card {
+        aspect-ratio: 1 / 1;
+      }
+
+      .logo-grid[data-columns="3"] .logo-card {
+        aspect-ratio: 1 / 1;
+        padding: 0.65rem;
+        border-radius: var(--radius-md);
+      }
+
+      .logo-card img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: 100%;
+        object-fit: contain;
+        mix-blend-mode: multiply;
+      }
+
+      footer {
+        margin-top: 1.5rem;
+        text-align: center;
+        font-size: 0.74rem;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-secondary);
+      }
+    </style>
+    <script type="module">
+      /**
+       * @typedef {Object} Sponsor
+       * @property {string} alt
+       * @property {string} src
+       */
+
+      /**
+       * @typedef {Object} SponsorTier
+       * @property {string} copy
+       * @property {number} columns
+       * @property {Sponsor[]} sponsors
+       */
+
+      /** @type {SponsorTier[]} */
+      const tiers = [
+        {
+          copy: "Ringraziamo queste realtà per lo straordinario supporto:",
+          columns: 1,
+          sponsors: [
+            {
+              alt: "Alma Project",
+              src: "logos/alma-project.png",
+            },
+            {
+              alt: "BCC",
+              src: "logos/bcc.png",
+            },
+            {
+              alt: "Distretto Rotary 2071",
+              src: "logos/distretto-rotary-2071.png",
+            },
+            {
+              alt: "Photobooth",
+              src: "logos/photoboot.jpeg",
+            },
+          ],
+        },
+        {
+          copy: "Ringraziamo queste realtà per il supporto:",
+          columns: 2,
+          sponsors: [
+            {
+              alt: "Generali",
+              src: "logos/generali.png",
+            },
+            {
+              alt: "Caffè Batani",
+              src: "logos/caffe-batani.png",
+            },
+            {
+              alt: "Caffè Indios",
+              src: "logos/caffe-indios.png",
+            },
+            {
+              alt: "Fattoria dei Barbi",
+              src: "logos/fattoria-dei-barbi.jpeg",
+            },
+            {
+              alt: "Unipol",
+              src: "logos/unipol.jpeg",
+            },
+            {
+              alt: "Bartalini",
+              src: "logos/bartalini.png",
+            },
+            {
+              alt: "Eventi in Bus",
+              src: "logos/eventi-in-bus.png",
+            },
+          ],
+        },
+        {
+          copy: "Ringraziamo queste realtà per i loro prodotti:",
+          columns: 3,
+          sponsors: [
+            {
+              alt: "Antica Drogheria Manganelli",
+              src: "logos/antica-drogheria-manganelli.png",
+            },
+            {
+              alt: "Fortini",
+              src: "logos/fortini.png",
+            },
+            {
+              alt: "Kaloderma",
+              src: "logos/kaloderma.png",
+            },
+            {
+              alt: "Molteni",
+              src: "logos/molteni.png",
+            },
+            {
+              alt: "Oxy",
+              src: "logos/oxy.png",
+            },
+            {
+              alt: "Proraso",
+              src: "logos/proraso.png",
+            },
+            {
+              alt: "Locatelli Saline",
+              src: "logos/locatelli-saline.png",
+            },
+            {
+              alt: "Tesorino",
+              src: "logos/tesorino.png",
+            },
+            {
+              alt: "VF Marmi",
+              src: "logos/vf-marmi.png",
+            },
+          ],
+        },
+      ];
+      const logoPathPattern = /^logos\/[a-z0-9]+(?:-[a-z0-9]+)*\.(png|jpe?g|webp|svg)$/i;
+      const app = document.querySelector("#app");
+      const tierTemplate = document.querySelector("#tier-template");
+      const sponsorTemplate = document.querySelector("#sponsor-template");
+
+      if (!(app instanceof HTMLDivElement)) {
+        throw new Error("Container sponsor non trovato.");
+      }
+
+      if (!(tierTemplate instanceof HTMLTemplateElement)) {
+        throw new Error("Template tier non trovato.");
+      }
+
+      if (!(sponsorTemplate instanceof HTMLTemplateElement)) {
+        throw new Error("Template sponsor non trovato.");
+      }
+
+      const content = document.createDocumentFragment();
+
+      for (const tier of tiers) {
+        const tierFragment = tierTemplate.content.cloneNode(true);
+
+        const section = tierFragment.querySelector(".tier-section");
+        const copy = tierFragment.querySelector(".tier-copy");
+        const grid = tierFragment.querySelector(".logo-grid");
+
+        if (
+          !(section instanceof HTMLElement) ||
+          !(copy instanceof HTMLParagraphElement) ||
+          !(grid instanceof HTMLDivElement)
+        ) {
+          throw new Error("Struttura del template tier non valida.");
+        }
+
+        copy.textContent = tier.copy;
+        grid.dataset.columns = String(tier.columns);
+        grid.setAttribute("aria-label", tier.copy);
+
+        for (const sponsor of tier.sponsors) {
+          if (!logoPathPattern.test(sponsor.src)) {
+            throw new Error("Percorso logo sponsor non valido.");
+          }
+
+          const sponsorFragment = sponsorTemplate.content.cloneNode(true);
+
+          const image = sponsorFragment.querySelector("img");
+
+          if (!(image instanceof HTMLImageElement)) {
+            throw new Error("Struttura del template sponsor non valida.");
+          }
+
+          image.src = sponsor.src;
+          image.alt = sponsor.alt;
+          grid.append(sponsorFragment);
+        }
+
+        content.append(tierFragment);
+      }
+
+      app.replaceChildren(content);
+    </script>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">Congresso Nazionale Siena 2026</span>
+        <h1>I nostri sponsor</h1>
+        <p>
+          Grazie alle realtà che accompagnano l’esperienza del congresso con il
+          loro contributo.
+        </p>
+      </header>
+
+      <div id="app" class="content"></div>
+
+      <template id="tier-template">
+        <section class="tier-section">
+          <p class="tier-copy"></p>
+          <div class="logo-grid"></div>
+        </section>
+      </template>
+
+      <template id="sponsor-template">
+        <!-- Placeholder trasparente 1x1 prima del caricamento del logo reale -->
+        <figure class="logo-card">
+          <img
+            src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw=="
+            alt=""
+            loading="lazy"
+          />
+        </figure>
+      </template>
+
+      <footer>Rotaract Distretto 2071</footer>
+    </main>
+  </body>
+</html>
