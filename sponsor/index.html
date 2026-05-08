@@ -172,23 +172,6 @@
         color: var(--text-secondary);
       }
     </style>
-  </head>
-  <body>
-    <main>
-      <header class="hero">
-        <span class="eyebrow">Congresso Nazionale Siena 2026</span>
-        <h1>I nostri sponsor</h1>
-        <p>
-          Grazie alle realtà che accompagnano l’esperienza del congresso con il
-          loro contributo.
-        </p>
-      </header>
-
-      <div id="app" class="content"></div>
-
-      <footer>Rotaract Distretto 2071</footer>
-    </main>
-
     <script type="module">
       /**
        * @typedef {Object} Sponsor
@@ -258,7 +241,7 @@
             {
               alt: "Eventi in Bus",
               src: "logos/eventi-in-bus.png",
-            }
+            },
           ],
         },
         {
@@ -300,49 +283,105 @@
             {
               alt: "VF Marmi",
               src: "logos/vf-marmi.png",
-            }
+            },
           ],
         },
       ];
 
       const app = document.querySelector("#app");
+      const tierTemplate = document.querySelector("#tier-template");
+      const sponsorTemplate = document.querySelector("#sponsor-template");
 
       if (!(app instanceof HTMLDivElement)) {
         throw new Error("Container sponsor non trovato.");
       }
 
+      if (!(tierTemplate instanceof HTMLTemplateElement)) {
+        throw new Error("Template tier non trovato.");
+      }
+
+      if (!(sponsorTemplate instanceof HTMLTemplateElement)) {
+        throw new Error("Template sponsor non trovato.");
+      }
+
       const content = document.createDocumentFragment();
 
       for (const tier of tiers) {
-        const section = document.createElement("section");
-        section.className = "tier-section";
+        const tierFragment = tierTemplate.content.cloneNode(true);
 
-        const copy = document.createElement("p");
+        if (!(tierFragment instanceof DocumentFragment)) {
+          continue;
+        }
+
+        const section = tierFragment.querySelector(".tier-section");
+        const copy = tierFragment.querySelector(".tier-copy");
+        const grid = tierFragment.querySelector(".logo-grid");
+
+        if (
+          !(section instanceof HTMLElement) ||
+          !(copy instanceof HTMLParagraphElement) ||
+          !(grid instanceof HTMLDivElement)
+        ) {
+          continue;
+        }
+
         copy.textContent = tier.copy;
-
-        const grid = document.createElement("div");
-        grid.className = "logo-grid";
         grid.dataset.columns = String(tier.columns);
         grid.setAttribute("aria-label", tier.copy);
 
         for (const sponsor of tier.sponsors) {
-          const card = document.createElement("figure");
-          card.className = "logo-card";
+          const sponsorFragment = sponsorTemplate.content.cloneNode(true);
 
-          const image = document.createElement("img");
+          if (!(sponsorFragment instanceof DocumentFragment)) {
+            continue;
+          }
+
+          const image = sponsorFragment.querySelector("img");
+
+          if (!(image instanceof HTMLImageElement)) {
+            continue;
+          }
+
           image.src = sponsor.src;
           image.alt = sponsor.alt;
           image.loading = "lazy";
 
-          card.append(image);
-          grid.append(card);
+          grid.append(sponsorFragment);
         }
 
-        section.append(copy, grid);
         content.append(section);
       }
 
       app.replaceChildren(content);
     </script>
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <span class="eyebrow">Congresso Nazionale Siena 2026</span>
+        <h1>I nostri sponsor</h1>
+        <p>
+          Grazie alle realtà che accompagnano l’esperienza del congresso con il
+          loro contributo.
+        </p>
+      </header>
+
+      <div id="app" class="content"></div>
+
+      <template id="tier-template">
+        <section class="tier-section">
+          <p class="tier-copy"></p>
+          <div class="logo-grid"></div>
+        </section>
+      </template>
+
+      <template id="sponsor-template">
+        <figure class="logo-card">
+          <img />
+        </figure>
+      </template>
+
+      <footer>Rotaract Distretto 2071</footer>
+    </main>
   </body>
 </html>
